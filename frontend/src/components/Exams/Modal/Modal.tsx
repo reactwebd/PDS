@@ -9,22 +9,9 @@ export default function Modal(props:any) {
   const marref:string|any = useRef("")
   const amoref:string|any = useRef("")
   const exref:string|any = useRef("")
-  const [body, setBody] = useState({})
+  // const [body, setBody] = useState<>(null)
   const {loader,error,RDH : updater}= UseFetcher()
-  const secondHand = (respo:any) => {
-    let id:number = props.uid
-    updater({
-      url : `http://localhost:8000/api/exams/${id}`,
-      met : "PUT",
-      body : body,
-      head : {
-        "Content-Type" : "application/json"
-      }
-    },secondHand(respo))
-    props.onClose()
-    console.log(respo)
-  }
-  const updatebutton =(e:any)=>{
+  const secondHand = (e:any,respo:any) => {
     e.preventDefault()
     let id = props.uid
     let date = dateref.current.value
@@ -48,9 +35,22 @@ export default function Modal(props:any) {
     else{
       props.fastu(id,formobj)
         console.log(formobj)
-       setBody(formobj)
-     secondHand
+    //  secondHand
+    let id:number = props.uid
+    updater({
+      url : `http://localhost:8000/api/exams/${id}`,
+      met : "PUT",
+      body : formobj,
+      head : {
+        "Content-Type" : "application/json"
+      }
+    },secondHand)
+    props.onClose()
+    console.log(respo)
     }
+  }
+  const updatebutton =(e:any)=>{
+   secondHand(e)
 }
   return (
     <div id="modal" className="modal">

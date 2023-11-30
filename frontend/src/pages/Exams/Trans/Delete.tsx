@@ -2,7 +2,7 @@ import React from "react";
 import "./TestTrans.css";
 import UseFetcher from "../../../hooks/UseFetcher";
 
-const Delete:React.FC<{id:number,amount:number,type:string,fastde:(id:number,amount:number,type:string)=>{}}>=(props) =>{
+const Delete:React.FC<{id:number,amount:number,type:string,fastde:(id:number,amount:number,type:string)=>void}>=(props) =>{
   const { loader, error, RDH: deleddata } = UseFetcher();
   const deletebutton  = (respo:any) => {
     let a = props.id;

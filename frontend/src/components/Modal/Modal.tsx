@@ -1,8 +1,18 @@
 import React,{useRef,useState} from "react";
 import "./Modal.css";
-import UseFetcher from "../../../hooks/UseFetcher";
+import UseFetcher from "../../hooks/UseFetcher";
 
-export default function Modal(props:any) {
+
+  type FOT = {
+    Id : number,
+    Type : string,
+    Date : string,
+    Subject : string,
+    Mark : number,
+    Amount : number,
+    Exam : string
+  }
+ const Modal:React.FC<{uid : number,fastu:(id : number,formobj:FOT)=>void,onCancel:()=>void}>=(props) =>{
   const typeref:string|any = useRef("")
   const dateref:string|any = useRef("")
   const subref:string|any = useRef("")
@@ -11,7 +21,7 @@ export default function Modal(props:any) {
   const exref:string|any = useRef("")
   // const [body, setBody] = useState<>(null)
   const {loader,error,RDH : updater}= UseFetcher()
-  const secondHand = (e:any,respo:any) => {
+  const secondHand = (e:any) => {
     e.preventDefault()
     let id = props.uid
     let date = dateref.current.value
@@ -20,23 +30,23 @@ export default function Modal(props:any) {
     let mar = marref.current.value
     let amount = amoref.current.value
     let exam = exref.current.value
-    let formobj = {
+    let formobj : FOT = {
         Id : Math.random(),
         Type : type,
         Date : date,
         Subject : sub,
         Mark : mar,
-        Amount : amount,
+        Amount : amount, 
         Exam : exam
       }
-      if( formobj.Date ==="" || formobj.Subject === "" || formobj.Mark === "" || formobj.Amount === "" || formobj.Exam === ""){
+      if( formobj.Date ==="" || formobj.Subject === "" || formobj.Mark === 0 || formobj.Amount === 0 || formobj.Exam === ""){
         alert("Please fill the form")
     }
     else{
       props.fastu(id,formobj)
         console.log(formobj)
     //  secondHand
-    let id:number = props.uid
+    // let id:number = props.uid
     updater({
       url : `http://localhost:8000/api/exams/${id}`,
       met : "PUT",
@@ -45,17 +55,14 @@ export default function Modal(props:any) {
         "Content-Type" : "application/json"
       }
     },secondHand)
-    props.onClose()
-    console.log(respo)
+    props.onCancel()
+    // console.log(respo)
     }
   }
-  const updatebutton =(e:any)=>{
-   secondHand(e)
-}
   return (
     <div id="modal" className="modal">
       <div className="modal-content">
-        <span className="close" onClick={props.onClose}>&times;</span>
+        <span className="close" onClick={props.onCancel}>&times;</span>
         <h2>Modal Form</h2>
         <form>
         <label htmlFor="">Date</label>
@@ -79,9 +86,10 @@ export default function Modal(props:any) {
         <label htmlFor="">Name of exam</label>
         <input type="text" placeholder="Enter the name of test" required ref={exref}/>
 
-        <button type="submit" onClick={updatebutton}>{loader === true ? "Updating the entry..." : "Update the entry"}</button>
+        <button type="submit" onClick={secondHand}>{loader === true ? "Updating the entry..." : "Update the entry"}</button>
       </form>
       </div>
   </div>
   );
 }
+export default Modal

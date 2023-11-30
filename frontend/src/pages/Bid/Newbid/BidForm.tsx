@@ -10,7 +10,7 @@ export default function BigForm(props:any) {
     const monthsref : number|any = useRef(0)
     const {loader,error,RDH : poster} = UseFetcher()
   
-    const post = (e:React.FormEvent,responseData:any) => {
+    const post = (e:React.FormEvent) => {
       e.preventDefault()
       let condition:string = conditionref.current.valueOf
       let price:number = amountref.current.valueOf

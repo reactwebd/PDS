@@ -1,13 +1,13 @@
 import React, { useState,useEffect } from "react";
 import Layout  from "./components/layout/Layout";
-import TestForm from './components/Exams/NewTran/TestForm';
-import TestTrans from './components/Exams/Trans/TestTrans';
-import Modal from './components/Exams/Modal/Modal'
+import TestForm from './pages/Exams/NewTran/TestForm';
+import TestTrans from './pages/Exams/Trans/TestTrans';
+import Modal from './components/Modal/Modal'
 import UseFetcher from './hooks/UseFetcher';
-import Delete from "./components/Exams/Trans/Delete";
-import Update from "./components/Exams/Trans/Update";
-import './components/Exams/Trans/TestTrans.css'
-import BidForm from "./components/Bid/Newbid/BidForm";
+import Delete from "./pages/Exams/Trans/Delete";
+import Update from "./pages/Exams/Trans/Update";
+import './pages/Exams/Trans/TestTrans.css'
+import BidForm from "./pages/Bid/Newbid/BidForm";
 import { Route, Routes } from "react-router-dom";
 // import {createBrowserRouter} from "react-router-dom"
 
@@ -71,9 +71,12 @@ export default function App() {
     );
   }, [fetcher, error]);
 
-  const handleClick = (id:number) => {
+  const handleClick : (id:number)=>void = (id) => {
     setClicked((prevClicked)=>!prevClicked)
     setUpdateId(id)
+  }
+  const handleClose : ()=>void = () =>{
+    setClicked((prevClicked)=>!prevClicked)
   }
   const fastData = (da:responseType)=>{
     // let newData = [...data,da]
@@ -100,7 +103,7 @@ export default function App() {
       setTotal((prevTotal) => prevTotal - da.Amount)
     }  
   }
-  const fastdelete = (id:number,amount:number,type:string)=>{
+  const fastdelete: (id:number,amount:number,type:string)=>void= (id,amount,type)=>{
     let narr = data.filter((obj : {id:number})=>obj.id !== id)
     setData(narr)
     console.log(data)
@@ -111,7 +114,7 @@ export default function App() {
       setTotal((prevTotal)=>prevTotal+amount)
     }
   }
-  const fastu = (id:number,obj:{Id : number,Type : string,Date:string,Subject:string,Mark:number,Amount:number,Exam:string})=>{
+  const fastu : (id:number,obj:{Id : number,Type : string,Date:string,Subject:string,Mark:number,Amount:number,Exam:string})=>void = (id,obj)=>{
     type updatetype = {
       id : number,
       type : string,
@@ -166,7 +169,7 @@ export default function App() {
 
       {data.map((obj:{id:number,date:string,type:string,subject:string,mark:number,amo:number,en:string})=>(
         <>  
-        {clicked && <Modal fastu={fastu} uid={UpdateId} onClose={handleClick}/>}
+        {clicked && <Modal fastu={fastu} uid={UpdateId}  onCancel={handleClose}/>}
          <TestTrans 
             key={obj.id}
             date={obj.date}

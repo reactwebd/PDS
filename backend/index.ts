@@ -1,6 +1,6 @@
 import cors from 'cors'
 import express,{Application, Request, Response} from 'express'
-import mysql_conn from './mysql_conn'
+import mysql_conn from './mysql_conn.ts'
 
 const app:Application= express()
 // console.log(typeof(app))
@@ -11,9 +11,9 @@ type datatype ={
   Type : string,
   Date : string,
   Subject : string,
-  Mark : number,
+  Marks : number,
   Amount : number,
-  Exam :  string
+  ExamName :  string
 }
 
 let loadedData : datatype[] = [{
@@ -21,9 +21,9 @@ let loadedData : datatype[] = [{
 Type:"Recipt",
 Date: "25/10/2023",
 Subject:"Computer",
-Mark:26,
+Marks:26,
 Amount:100,
-Exam:"Weekly test"
+ExamName:"Weekly test"
 
 }]
 mysql_conn.getConnection(function (err : any) {
@@ -67,7 +67,7 @@ app.delete("/api/exams/:id", (req : Request,res:Response) => {
 
   try{
     const deleteId : string = req.params.id;
-    let fd2 = loadedData.filter((obj : any)=>obj.Id !== deleteId)
+    let fd2 = loadedData.filter((obj : any)=>obj.Id.toString(obj.Id) !== deleteId)
     loadedData = fd2
     res.status(200).json({message : "Code is working successfully with Id : "+deleteId + "array:"+loadedData.length})
   }
@@ -86,13 +86,12 @@ app.put("/api/exams/:id", (req : Request, res : Response) => {
   //     res.status(200).json({message : "Data such as "+req.body.Subject+" etc were updated successfully under "+UpdateId})
   //   }
   // })
-  let filtered  = loadedData.filter((obj:datatype)=>obj.Id==parseFloat(UpdateId))
+  let filtered : datatype[] = loadedData.filter((obj:datatype)=>obj.Id.toString(obj.Id)==UpdateId)
   let updatedobj:datatype= {
     Id : filtered.Id,
     Type : filtered.Type,
     Date : filtered.Date,
     Subject : filtered.Subject,
-
   }
   loadedData = [...loadedData,updatedobj]
 });

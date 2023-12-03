@@ -4,7 +4,7 @@ import TestForm from './pages/Exams/NewTran/TestForm';
 import TestTrans from './pages/Exams/Trans/TestTrans';
 import Modal from './components/Modal/Modal'
 import UseFetcher from './hooks/UseFetcher';
-import Delete from "./pages/Exams/Trans/Delete";
+import Delete from "./components/Buttons/Delete";
 import Update from "./pages/Exams/Trans/Update";
 import './pages/Exams/Trans/TestTrans.css'
 import BidForm from "./pages/Bid/Newbid/BidForm";
@@ -23,7 +23,7 @@ export default function App() {
     en:string
   }
  
-  const [clicked, setClicked] = useState<boolean>(false)
+  // const [clicked, setClicked] = useState<boolean>(false)
   const [UpdateId, setUpdateId] = useState<number>(0)
   const [data, setData]= useState<RTIS[]>([])
   const [total, setTotal] = useState<number>(0)
@@ -73,12 +73,10 @@ export default function App() {
   }, [fetcher, error]);
 
   const handleClick : (id:number)=>void = (id) => {
-    setClicked((prevClicked)=>!prevClicked)
+    // setClicked((prevClicked)=>!prevClicked)
     setUpdateId(id)
   }
-  const handleClose : ()=>void = () =>{
-    setClicked((prevClicked)=>!prevClicked)
-  }
+  
   const fastData = (da:responseType)=>{
     // let newData = [...data,da]
     
@@ -92,11 +90,11 @@ export default function App() {
       amo : da.Amount,
       en : da.ExamName
     }))
-    if(da.Type === "Recipt"){
+    if(da.Type === "Recipt"){ 
       // let tot = total
       // let added = da.Amount
       // tot = tot + added
-      setTotal(prevTotal=>prevTotal+da.Amount);//This is returns result as string.Such if there is an entry of 100 and I put one more entry of 100 it returns 100100 instead 200
+      setTotal(prevTotal=>prevTotal+parseInt(da.Amount.toString(da.Amount)));//This is returns result as string.Such if there is an entry of 100 and I put one more entry of 100 it returns 100100 instead 200
     }
     else{
       console.log(total)
@@ -109,13 +107,13 @@ export default function App() {
     setData(narr)
     console.log(data)
     if(type === "Recipt"){
-      setTotal((prevTotal)=>prevTotal-amount)
+      setTotal((prevTotal)=>prevTotal-parseInt(amount.toString(amount)))
     }
     else{
       setTotal((prevTotal)=>prevTotal+amount)
     }
   }
-  const fastu : (id:number,obj:{Id : number,Type : string,Date:string,Subject:string,Mark:number,Amount:number,Exam:string})=>void = (id,obj)=>{
+  const fastu : (id:number,obj:{Id : number,Type : string,Date:string,Subject:string,Marks:number,Amount:number,ExamName:string})=>void = (id,obj)=>{
     type updatetype = {
       id : number,
       type : string,
@@ -131,13 +129,13 @@ export default function App() {
         updateele.type  = obj.Type
         updateele.date = obj.Date
         updateele.subject = obj.Subject
-        updateele.mark = obj.Mark
+        updateele.mark = obj.Marks
         updateele.amo = obj.Amount
-        updateele.en = obj.Exam
+        updateele.en = obj.ExamName
       }
     })
     if(obj.Type === "Recipt"){
-      setTotal((prevTotal)=>prevTotal+obj.Amount)
+      setTotal((prevTotal)=>prevTotal+parseInt(obj.Amount.toString(obj.Amount)))
     }
     else{
       setTotal((prevTotal)=>prevTotal-obj.Amount)
@@ -170,7 +168,6 @@ export default function App() {
 
       {data.map((obj:{id:number,date:string,type:string,subject:string,mark:number,amo:number,en:string})=>(
         <>  
-        {clicked && <Modal fastu={fastu} uid={UpdateId}  onCancel={handleClose}/>}
          <TestTrans 
             key={obj.id}
             date={obj.date}
@@ -198,6 +195,10 @@ export default function App() {
               <p  style={{marginLeft : "955px"}}>{`${total}`}</p>
         </>
       }
+      />
+      <Route 
+        path={`/exam_update/${UpdateId}`}
+        element={<Modal fastu={fastu}/>}
       />
       <Route
       path="/bid"

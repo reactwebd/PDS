@@ -26,20 +26,20 @@ export default function TestForm(props:any) {
         Type : string,
         Date : string,
         Subject : string,
-        Mark : number,
+        Marks : number,
         Amount : number,
-        Exam : string
+        ExamName : string
       }
       let formobj:formtype = {
           Id : Math.random(),
           Type : type,
           Date : date,
           Subject : sub,
-          Mark : mar,
+          Marks : mar,
           Amount : amount,
-          Exam : exam
+          ExamName : exam
       }
-      if(formobj.Type === "" || formobj.Date === "", formobj.Subject === "" || formobj.Mark === 0 || formobj.Amount === 0 || formobj.Exam === ""){
+      if(formobj.Type === "" || formobj.Date === "" ||  formobj.Subject === "" || formobj.Marks === 0 || formobj.Amount === 0 || formobj.ExamName === ""){
           alert("Please fill the form")
       }
       else{
@@ -68,7 +68,7 @@ export default function TestForm(props:any) {
  
   return (
     <div className="form-container">
-      {/* {error !== null && <p>error caused : {error}</p>} */}
+      {error !== null && <p>error caused : {error}</p>}
       <h2>The the Income or expence of the Test</h2>
       <form>
         <label htmlFor="">Date</label>

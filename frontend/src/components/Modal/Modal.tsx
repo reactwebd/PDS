@@ -1,4 +1,4 @@
-import React,{useRef,useState} from "react";
+import React,{useRef} from "react";
 import "./Modal.css";
 import UseFetcher from "../../hooks/UseFetcher";
 
@@ -8,11 +8,11 @@ import UseFetcher from "../../hooks/UseFetcher";
     Type : string,
     Date : string,
     Subject : string,
-    Mark : number,
+    Marks : number,
     Amount : number,
-    Exam : string
+    ExamName : string
   }
- const Modal:React.FC<{uid : number,fastu:(id : number,formobj:FOT)=>void,onCancel:()=>void}>=(props) =>{
+ const Modal:React.FC<{fastu:(id : number,formobj:FOT)=>void}>=(props) =>{
   const typeref:string|any = useRef("")
   const dateref:string|any = useRef("")
   const subref:string|any = useRef("")
@@ -23,7 +23,7 @@ import UseFetcher from "../../hooks/UseFetcher";
   const {loader,error,RDH : updater}= UseFetcher()
   const secondHand = (e:any) => {
     e.preventDefault()
-    let id = props.uid
+    let id : number = 54655
     let date = dateref.current.value
     let type = typeref.current.value
     let sub = subref.current.value
@@ -35,11 +35,11 @@ import UseFetcher from "../../hooks/UseFetcher";
         Type : type,
         Date : date,
         Subject : sub,
-        Mark : mar,
+        Marks : mar,
         Amount : amount, 
-        Exam : exam
+        ExamName : exam
       }
-      if( formobj.Date ==="" || formobj.Subject === "" || formobj.Mark === 0 || formobj.Amount === 0 || formobj.Exam === ""){
+      if( formobj.Date ==="" || formobj.Subject === "" || formobj.Marks === 0 || formobj.Amount === 0 || formobj.ExamName === ""){
         alert("Please fill the form")
     }
     else{
@@ -53,16 +53,16 @@ import UseFetcher from "../../hooks/UseFetcher";
       body : formobj,
       head : {
         "Content-Type" : "application/json"
-      }
+      } 
     },secondHand)
-    props.onCancel()
+    // props.onCancel()
     // console.log(respo)
     }
   }
   return (
     <div id="modal" className="modal">
       <div className="modal-content">
-        <span className="close" onClick={props.onCancel}>&times;</span>
+        <span className="close">&times;</span>
         <h2>Modal Form</h2>
         <form>
         <label htmlFor="">Date</label>
@@ -87,6 +87,7 @@ import UseFetcher from "../../hooks/UseFetcher";
         <input type="text" placeholder="Enter the name of test" required ref={exref}/>
 
         <button type="submit" onClick={secondHand}>{loader === true ? "Updating the entry..." : "Update the entry"}</button>
+        {error!==null&&<p>{error}</p>}
       </form>
       </div>
   </div>

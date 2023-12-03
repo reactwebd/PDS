@@ -1,8 +1,14 @@
 import React from "react";
-import "./TestTrans.css";
-import UseFetcher from "../../../hooks/UseFetcher";
+import "../../pages/Exams/Trans/TestTrans.css";
+import UseFetcher from "../../hooks/UseFetcher";
+// import { useLocation } from "react-router-dom";
+
+
+
+
 
 const Delete:React.FC<{id:number,amount:number,type:string,fastde:(id:number,amount:number,type:string)=>void}>=(props) =>{
+    // let location = useLocation()
   const { loader, error, RDH: deleddata } = UseFetcher();
   const deletebutton  = (respo:any) => {
     let a = props.id;
@@ -22,6 +28,7 @@ const Delete:React.FC<{id:number,amount:number,type:string,fastde:(id:number,amo
       onClick={deletebutton}
     >
       {loader=== true ? "Deleting..." : "Delete"}
+      {error !==null && <p>{error}</p>}
     </button>
   );
 }

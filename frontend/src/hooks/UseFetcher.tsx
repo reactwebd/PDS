@@ -8,9 +8,9 @@ const UseFetcher = () => {
   type examtype = {
       Id : number,
       Type : string,
-      Mark : number,
+      Marks : number,
       Amount : number,
-      Exam : string
+      ExamName : string
   }
   type bidtype = {
     Id : number,

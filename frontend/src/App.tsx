@@ -22,6 +22,7 @@ export default function App() {
     amo:number,
     en:string
   }
+ 
   const [clicked, setClicked] = useState<boolean>(false)
   const [UpdateId, setUpdateId] = useState<number>(0)
   const [data, setData]= useState<RTIS[]>([])
@@ -40,7 +41,7 @@ export default function App() {
   
   useEffect(() => {
     const get = (responseData:responseType[]) => {
-      if (typeof error !== null) {
+      if (error !== null) {
         console.log(error);
       } else {
         let loadedData:any | RTIS[]

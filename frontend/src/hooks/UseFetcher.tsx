@@ -21,13 +21,13 @@ const UseFetcher = () => {
     Amount : number
   }
   type bodyType = examtype|bidtype|null
-  const RDH = useCallback(async(requestConfig:{url : string,met : string,body : bodyType,head : any|undefined},applydata:any)=>{
+  const RDH = useCallback(async(requestConfig:{url : string,met : string,body : bodyType,head: any|null},applydata:any)=>{
     try{
       setLoader(true) 
       const response= await fetch(requestConfig.url,{
         method : requestConfig.met,
-        body : typeof requestConfig.body !== null ? JSON.stringify(requestConfig.body) : null ,
-        headers : typeof requestConfig.head !== undefined ? requestConfig.head : {}
+        body : requestConfig.body !== null ? JSON.stringify(requestConfig.body) : null ,
+        headers : requestConfig.head !== undefined ? requestConfig.head : {}
       })
       if (!response.ok) {
         throw new Error('Request failed!');

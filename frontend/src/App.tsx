@@ -38,6 +38,14 @@ export default function App() {
   Amount : number,
   ExamName : string,
   }
+  interface bidType{
+    Id : number,
+    Condition:string,
+    Date:string,
+    Type:string,
+    Duration : number,
+    Amount : number
+  }
   
   useEffect(() => {
     const get = (responseData:responseType[]) => {
@@ -112,6 +120,9 @@ export default function App() {
     else{
       setTotal((prevTotal)=>prevTotal+amount)
     }
+  }
+  const handlebid:(fd:bidType)=>void = (Id,Condition,Date,Type)=>{
+    console.log({Id,Condition,Date,Type})
   }
   const fastu : (id:number,obj:{Id : number,Type : string,Date:string,Subject:string,Marks:number,Amount:number,ExamName:string})=>void = (id,obj)=>{
     type updatetype = {
@@ -202,7 +213,7 @@ export default function App() {
       />
       <Route
       path="/bid"
-      element = {<BidForm/>}
+      element = {<BidForm fastbid={handlebid}/>}
       /> 
       <Route
       path="/*"

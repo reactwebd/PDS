@@ -17,7 +17,7 @@ type datatype ={
 }
 
 let loadedData : datatype[] = [{
-  Id:0.1231,
+  Id:0,
 Type:"Recipt",
 Date: "25/10/2023",
 Subject:"Computer",
@@ -86,14 +86,16 @@ app.put("/api/exams/:id", (req : Request, res : Response) => {
   //     res.status(200).json({message : "Data such as "+req.body.Subject+" etc were updated successfully under "+UpdateId})
   //   }
   // })
-  let filtered : datatype[] = loadedData.filter((obj:datatype)=>obj.Id.toString(obj.Id)==UpdateId)
-  let updatedobj:datatype= {
-    Id : filtered.Id,
-    Type : filtered.Type,
-    Date : filtered.Date,
-    Subject : filtered.Subject,
+  let filtered : datatype|undefined = loadedData.find((obj:datatype)=>obj.Id.toString(obj.Id)==UpdateId)
+  if(filtered){
+   filtered.Id = req.body.Id,
+   filtered.Type = req.body.Type,
+   filtered.Date = req.body.Date,
+   filtered.Subject = req.body.Subject
+   filtered.Marks = req.body.Marks,
+   filtered.Amount = req.body.Amount,
+   filtered.ExamName = req.body.ExamName,
   }
-  loadedData = [...loadedData,updatedobj]
 });
 
 app.listen(8000,()=>{

@@ -2,7 +2,14 @@ import React, { useRef } from "react";
 import "../../Exams/NewTran/TestForm.css";
 import UseFetcher from "../../../hooks/UseFetcher";
 
-export default function BigForm(props:any) {
+const BidForm:React.FC<{fastbid:({
+  BId : number,
+  Condition:string,
+  BDate:string,
+  BType:string,
+  Duration : number,
+  BAmount : number
+})=>void}>=()=> {
   const conditionref :string| any = useRef("")
     const amountref : number|any = useRef(0)
     const typeref : string|any = useRef("")
@@ -18,15 +25,15 @@ export default function BigForm(props:any) {
       let type:string = typeref.current.valueOf
       let date:string = dateref.current.valueOf
 
-      let formobj : {Id:number,Condition:string,Date:string,Type:string,Duration:number,Amount:number} = {
-          Id : Math.random(),
+      let formobj : {BId:number,Condition:string,BDate:string,BType:string,Duration:number,BAmount:number} = {
+          BId : Math.random(),
           Condition : condition,
-          Date : date,
-          Type : type,
+          BDate : date,
+          BType : type,
           Duration : duration,
-          Amount : price
+          BAmount : price
       }
-      if( formobj.Condition ==="" || formobj.Date === "" || formobj.Type === "" || formobj.Duration === 0 || formobj.Amount === 0){
+      if( formobj.Condition ==="" || formobj.BDate === "" || formobj.BType === "" || formobj.Duration === 0 || formobj.BAmount === 0){
           alert("Please fill the form")
       }
       else{
@@ -86,3 +93,4 @@ export default function BigForm(props:any) {
     </div>
   );
 }
+export default BidForm

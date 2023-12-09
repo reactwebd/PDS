@@ -1,5 +1,5 @@
 import React,{useRef} from "react";
-import "./Modal.css";
+import "../Styles/Modal.css";
 import UseFetcher from "../../hooks/UseFetcher";
 
 

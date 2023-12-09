@@ -1,4 +1,4 @@
-import "./TestTrans.css";
+import "../../../components/Styles/TestTrans.css";
 // import Delete from "./Delete";
 // import UseFetcher from "../../hooks/UseFetcher";
 

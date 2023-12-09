@@ -13,12 +13,12 @@ const UseFetcher = () => {
       ExamName : string
   }
   type bidtype = {
-    Id : number,
+    BId : number,
     Condition:string,
-    Date:string,
-    Type:string,
+    BDate:string,
+    BType:string,
     Duration : number,
-    Amount : number
+    BAmount : number
   }
   type bodyType = examtype|bidtype|null
   const RDH = useCallback(async(requestConfig:{url : string,met : string,body : bodyType,head: any|null},applydata:any)=>{

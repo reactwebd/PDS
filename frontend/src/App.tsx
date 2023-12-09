@@ -5,7 +5,7 @@ import TestTrans from './pages/Exams/Trans/TestTrans';
 import Modal from './components/Modal/Modal'
 import UseFetcher from './hooks/UseFetcher';
 import Delete from "./components/Buttons/Delete";
-import Update from "./pages/Exams/Trans/Update";
+import Update from "./components/Buttons/Update";
 import './pages/Exams/Trans/TestTrans.css'
 import BidForm from "./pages/Bid/Newbid/BidForm";
 import { Route, Routes } from "react-router-dom";
@@ -38,14 +38,7 @@ export default function App() {
   Amount : number,
   ExamName : string,
   }
-  interface bidType{
-    Id : number,
-    Condition:string,
-    Date:string,
-    Type:string,
-    Duration : number,
-    Amount : number
-  }
+
   
   useEffect(() => {
     const get = (responseData:responseType[]) => {
@@ -121,8 +114,8 @@ export default function App() {
       setTotal((prevTotal)=>prevTotal+amount)
     }
   }
-  const handlebid:(fd:bidType)=>void = (Id,Condition,Date,Type)=>{
-    console.log({Id,Condition,Date,Type})
+  const handlebid:(bidobj:{BId:number,Condition:string,BDate:string,BType:string,Duration:number,BAmount:number})=>void = (bidobj)=>{
+    console.log(bidobj)
   }
   const fastu : (id:number,obj:{Id : number,Type : string,Date:string,Subject:string,Marks:number,Amount:number,ExamName:string})=>void = (id,obj)=>{
     type updatetype = {

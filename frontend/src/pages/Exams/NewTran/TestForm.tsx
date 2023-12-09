@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import "./TestForm.css";
+import "../../../components/Styles/TestForm.css";
 import UseFetcher from "../../../hooks/UseFetcher";
 
 export default function TestForm(props:any) {

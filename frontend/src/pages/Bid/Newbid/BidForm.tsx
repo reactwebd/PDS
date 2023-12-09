@@ -1,15 +1,8 @@
 import React, { useRef } from "react";
-import "../../Exams/NewTran/TestForm.css";
+import "../../../components/Styles/TestTrans.css";
 import UseFetcher from "../../../hooks/UseFetcher";
 
-const BidForm:React.FC<{fastbid:({
-  BId : number,
-  Condition:string,
-  BDate:string,
-  BType:string,
-  Duration : number,
-  BAmount : number
-})=>void}>=()=> {
+const BidForm:React.FC<{fastbid:(bidobj : {BId:number,Condition:string,BDate:string,BType:string,Duration:number,BAmount:number})=>void}>=(props)=> {
   const conditionref :string| any = useRef("")
     const amountref : number|any = useRef(0)
     const typeref : string|any = useRef("")
@@ -19,11 +12,11 @@ const BidForm:React.FC<{fastbid:({
   
     const post = (e:React.FormEvent) => {
       e.preventDefault()
-      let condition:string = conditionref.current.valueOf
-      let price:number = amountref.current.valueOf
-      let duration:number = monthsref.current.valueOf
-      let type:string = typeref.current.valueOf
-      let date:string = dateref.current.valueOf
+      let condition:string = conditionref.current.value
+      let price:number = amountref.current.value
+      let duration:number = monthsref.current.value
+      let type:string = typeref.current.value
+      let date:string = dateref.current.value
 
       let formobj : {BId:number,Condition:string,BDate:string,BType:string,Duration:number,BAmount:number} = {
           BId : Math.random(),
@@ -37,16 +30,16 @@ const BidForm:React.FC<{fastbid:({
           alert("Please fill the form")
       }
       else{
-          props.fast(formobj)
+          props.fastbid(formobj)
           console.log(formobj)
           try{
             type bodyT = {
-              Id : number,
+              BId : number,
               Condition:string,
-              Date:string,
-              Type:string,
+              BDate:string,
+              BType:string,
               Duration : number,
-              Amount : number
+              BAmount : number
             }
             let reqconf : {url : string,met:string,body:bodyT,head : any} = {
               url : "http://localhost:8000/api/exams",
@@ -88,7 +81,8 @@ const BidForm:React.FC<{fastbid:({
         <label htmlFor="">Amount</label>
         <input type="number" placeholder="Enter the amount of test" required ref={amountref}/>
 
-        <button type="submit" onClick={post}>Submit</button>
+        <button type="submit" onClick={post}>{loader === true ? "Submitting..." : "Submit"}</button>
+        {error!=null && <p>{error}</p>}
       </form>
     </div>
   );

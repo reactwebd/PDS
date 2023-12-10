@@ -1,5 +1,5 @@
 import React from "react";
-import "../../pages/Exams/Trans/TestTrans.css";
+import "../Styles/TestTrans.css";
 import UseFetcher from "../../hooks/UseFetcher";
 // import { useLocation } from "react-router-dom";
 

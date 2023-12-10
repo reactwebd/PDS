@@ -6,7 +6,7 @@ import Modal from './components/Modal/Modal'
 import UseFetcher from './hooks/UseFetcher';
 import Delete from "./components/Buttons/Delete";
 import Update from "./components/Buttons/Update";
-import './pages/Exams/Trans/TestTrans.css'
+import './components/Styles/TestTrans.css'
 import BidForm from "./pages/Bid/Newbid/BidForm";
 import { Route, Routes } from "react-router-dom";
 // import {createBrowserRouter} from "react-router-dom"
@@ -22,9 +22,7 @@ export default function App() {
     amo:number,
     en:string
   }
- 
-  // const [clicked, setClicked] = useState<boolean>(false)
-  const [UpdateId, setUpdateId] = useState<number>(0)
+  // const [UpdateId, setUpdateId] = useState<number>(0)
   const [data, setData]= useState<RTIS[]>([])
   const [total, setTotal] = useState<number>(0)
   const {loader,error,RDH : fetcher} = UseFetcher()
@@ -73,10 +71,7 @@ export default function App() {
     );
   }, [fetcher, error]);
 
-  const handleClick : (id:number)=>void = (id) => {
-    // setClicked((prevClicked)=>!prevClicked)
-    setUpdateId(id)
-  }
+  
   
   const fastData = (da:responseType)=>{
     // let newData = [...data,da]
@@ -117,7 +112,7 @@ export default function App() {
   const handlebid:(bidobj:{BId:number,Condition:string,BDate:string,BType:string,Duration:number,BAmount:number})=>void = (bidobj)=>{
     console.log(bidobj)
   }
-  const fastu : (id:number,obj:{Id : number,Type : string,Date:string,Subject:string,Marks:number,Amount:number,ExamName:string})=>void = (id,obj)=>{
+  const fastu : (id:string,obj:{Id : number,Type : string,Date:string,Subject:string,Marks:number,Amount:number,ExamName:string})=>void = (id,obj)=>{
     type updatetype = {
       id : number,
       type : string,
@@ -128,7 +123,7 @@ export default function App() {
       en : string
     }
     data.forEach((updateele : updatetype) =>{
-      if(updateele.id === id){
+      if(updateele.id === parseInt(id)){
         updateele.id = obj.Id
         updateele.type  = obj.Type
         updateele.date = obj.Date
@@ -186,7 +181,7 @@ export default function App() {
               type={obj.type}
               fastde= {fastdelete}
             />}
-            component2 = {<Update id={obj.id} onChange={handleClick} />}
+            component2 = {<Update id={obj.id} />}
             data={obj}
          />
          
@@ -201,7 +196,7 @@ export default function App() {
       }
       />
       <Route 
-        path={`/exam_update/${UpdateId}`}
+        path={`/exam_update/:uid`}
         element={<Modal fastu={fastu}/>}
       />
       <Route

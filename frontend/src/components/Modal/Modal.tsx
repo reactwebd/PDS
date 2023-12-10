@@ -1,7 +1,7 @@
 import React,{useRef} from "react";
 import "../Styles/Modal.css";
 import UseFetcher from "../../hooks/UseFetcher";
-
+import { useParams } from "react-router-dom";
 
   type FOT = {
     Id : number,
@@ -12,7 +12,7 @@ import UseFetcher from "../../hooks/UseFetcher";
     Amount : number,
     ExamName : string
   }
- const Modal:React.FC<{fastu:(id : number,formobj:FOT)=>void}>=(props) =>{
+ const Modal:React.FC<{fastu:(id : string,formobj:FOT)=>void}>=(props) =>{
   const typeref:string|any = useRef("")
   const dateref:string|any = useRef("")
   const subref:string|any = useRef("")
@@ -23,7 +23,7 @@ import UseFetcher from "../../hooks/UseFetcher";
   const {loader,error,RDH : updater}= UseFetcher()
   const secondHand = (e:any) => {
     e.preventDefault()
-    let id : number = 54655
+    const { uid } = useParams<{ uid?: string }>();
     let date = dateref.current.value
     let type = typeref.current.value
     let sub = subref.current.value
@@ -43,12 +43,12 @@ import UseFetcher from "../../hooks/UseFetcher";
         alert("Please fill the form")
     }
     else{
-      props.fastu(id,formobj)
+      props.fastu(uid,formobj)
         console.log(formobj)
     //  secondHand
     // let id:number = props.uid
     updater({
-      url : `http://localhost:8000/api/exams/${id}`,
+      url : `http://localhost:8000/api/exams/${uid}`,
       met : "PUT",
       body : formobj,
       head : {

@@ -1,11 +1,13 @@
 // import React from 'react'
-import '../Styles/TestTrans.css'
 
-export default function Update(props: { onChange: (arg0: number) => void; id: number }) {
+import { useNavigate } from 'react-router-dom'
+import '../Styles/TestTrans.css'
+export default function Update(props: { id: number }) {
+  const navigate = useNavigate()
   return (
     <button className="updated-styled-button" onClick={()=>{
-                  
-        props.onChange(props.id)
+        navigate(`/exam_update/:${props.id}`)    
+        // props.onChange(props.id)
       }} >Update</button>
   )
 }

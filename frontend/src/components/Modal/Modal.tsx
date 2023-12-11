@@ -1,7 +1,7 @@
 import React,{useRef} from "react";
 import "../Styles/Modal.css";
 import UseFetcher from "../../hooks/UseFetcher";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
   type FOT = {
     Id : number,
@@ -12,7 +12,7 @@ import { useParams } from "react-router-dom";
     Amount : number,
     ExamName : string
   }
- const Modal:React.FC<{fastu:(id : string,formobj:FOT)=>void}>=(props) =>{
+ const Modal:React.FC<{fastu:(id : string|undefined,formobj:FOT)=>void}>=(props) =>{
   const typeref:string|any = useRef("")
   const dateref:string|any = useRef("")
   const subref:string|any = useRef("")
@@ -21,9 +21,10 @@ import { useParams } from "react-router-dom";
   const exref:string|any = useRef("")
   // const [body, setBody] = useState<>(null)
   const {loader,error,RDH : updater}= UseFetcher()
+  const navigate =  useNavigate()
+  const { uid } = useParams<{ uid?: string }>();
   const secondHand = (e:any) => {
     e.preventDefault()
-    const { uid } = useParams<{ uid?: string }>();
     let date = dateref.current.value
     let type = typeref.current.value
     let sub = subref.current.value
@@ -43,8 +44,11 @@ import { useParams } from "react-router-dom";
         alert("Please fill the form")
     }
     else{
+
       props.fastu(uid,formobj)
+      navigate("/")
         console.log(formobj)
+        
     //  secondHand
     // let id:number = props.uid
     updater({

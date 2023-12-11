@@ -112,7 +112,7 @@ export default function App() {
   const handlebid:(bidobj:{BId:number,Condition:string,BDate:string,BType:string,Duration:number,BAmount:number})=>void = (bidobj)=>{
     console.log(bidobj)
   }
-  const fastu : (id:string,obj:{Id : number,Type : string,Date:string,Subject:string,Marks:number,Amount:number,ExamName:string})=>void = (id,obj)=>{
+  const fastu : (id:string|undefined,obj:{Id : number,Type : string,Date:string,Subject:string,Marks:number,Amount:number,ExamName:string})=>void = (id,obj)=>{
     type updatetype = {
       id : number,
       type : string,
@@ -122,8 +122,9 @@ export default function App() {
       amo : number,
       en : string
     }
+   
     data.forEach((updateele : updatetype) =>{
-      if(updateele.id === parseInt(id)){
+      if(updateele.id.toString(updateele.id) === id){
         updateele.id = obj.Id
         updateele.type  = obj.Type
         updateele.date = obj.Date

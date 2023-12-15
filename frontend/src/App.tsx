@@ -90,7 +90,7 @@ export default function App() {
       // let tot = total
       // let added = da.Amount
       // tot = tot + added
-      setTotal(prevTotal=>prevTotal+parseInt(da.Amount.toString(da.Amount)));//This is returns result as string.Such if there is an entry of 100 and I put one more entry of 100 it returns 100100 instead 200
+      setTotal(prevTotal=>prevTotal+parseInt(da.Amount.toString()));//This is returns result as string.Such if there is an entry of 100 and I put one more entry of 100 it returns 100100 instead 200
     }
     else{
       console.log(total)
@@ -103,10 +103,10 @@ export default function App() {
     setData(narr)
     console.log(data)
     if(type === "Recipt"){
-      setTotal((prevTotal)=>prevTotal-parseInt(amount.toString(amount)))
+      setTotal((prevTotal)=>prevTotal-amount)
     }
     else{
-      setTotal((prevTotal)=>prevTotal+amount)
+      setTotal((prevTotal)=>prevTotal+parseInt(amount.toString()))
     }
   }
   const handlebid:(bidobj:{BId:number,Condition:string,BDate:string,BType:string,Duration:number,BAmount:number})=>void = (bidobj)=>{
@@ -124,7 +124,7 @@ export default function App() {
     }
    
     data.forEach((updateele : updatetype) =>{
-      if(updateele.id.toString(updateele.id) === id){
+      if(updateele.id.toString(2) === id){
         updateele.id = obj.Id
         updateele.type  = obj.Type
         updateele.date = obj.Date
@@ -132,6 +132,10 @@ export default function App() {
         updateele.mark = obj.Marks
         updateele.amo = obj.Amount
         updateele.en = obj.ExamName
+      }
+      else{
+        alert("ID_DOSEN'T_MATCH")
+        console.log(updateele.id.toString(2))
       }
     })
     if(obj.Type === "Recipt"){

@@ -66,7 +66,9 @@ import { useNavigate, useParams } from "react-router-dom";
   return (
     <div id="modal" className="modal">
       <div className="modal-content">
-        <span className="close">&times;</span>
+        <span className="close" onClick={()=>{
+          navigate("/")
+        }}>&times;</span>
         <h2>Modal Form</h2>
         <form>
         <label htmlFor="">Date</label>

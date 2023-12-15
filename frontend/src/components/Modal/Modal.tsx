@@ -12,7 +12,10 @@ import { useNavigate, useParams } from "react-router-dom";
     Amount : number,
     ExamName : string
   }
- const Modal:React.FC<{fastu:(id : string|undefined,formobj:FOT)=>void}>=(props) =>{
+  interface Params{
+    uid?:string
+  }
+ const Modal:React.FC<{fastu:(id : number,formobj:FOT)=>void}>=(props) =>{
   const typeref:string|any = useRef("")
   const dateref:string|any = useRef("")
   const subref:string|any = useRef("")
@@ -22,7 +25,9 @@ import { useNavigate, useParams } from "react-router-dom";
   // const [body, setBody] = useState<>(null)
   const {loader,error,RDH : updater}= UseFetcher()
   const navigate =  useNavigate()
-  const { uid } = useParams<{ uid?: string }>();
+  const { uid } = useParams<Params>();
+  const nuid = uid ?? "";
+  // const nuid : number = parseInt(uid,10)
   const secondHand = (e:any) => {
     e.preventDefault()
     let date = dateref.current.value
@@ -45,10 +50,19 @@ import { useNavigate, useParams } from "react-router-dom";
     }
     else{
 
-      props.fastu(uid,formobj)
-      navigate("/")
-        console.log(formobj)
-        
+        if(isNaN(nuid)){
+          console.log(`Can't get ${nuid}`)
+          return 
+        }
+        else{
+          props.fastu(nuid,formobj)
+        navigate("/")
+          console.log(formobj)
+          
+        }
+      
+      
+      
     //  secondHand
     // let id:number = props.uid
     updater({

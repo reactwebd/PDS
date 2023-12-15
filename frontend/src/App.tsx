@@ -112,7 +112,7 @@ export default function App() {
   const handlebid:(bidobj:{BId:number,Condition:string,BDate:string,BType:string,Duration:number,BAmount:number})=>void = (bidobj)=>{
     console.log(bidobj)
   }
-  const fastu : (id:string|undefined,obj:{Id : number,Type : string,Date:string,Subject:string,Marks:number,Amount:number,ExamName:string})=>void = (id,obj)=>{
+  const fastu : (id:number,obj:{Id : number,Type : string,Date:string,Subject:string,Marks:number,Amount:number,ExamName:string})=>void = (id,obj)=>{
     type updatetype = {
       id : number,
       type : string,
@@ -124,7 +124,7 @@ export default function App() {
     }
    
     data.forEach((updateele : updatetype) =>{
-      if(updateele.id.toString(2) === id){
+      if(updateele.id === id){
         updateele.id = obj.Id
         updateele.type  = obj.Type
         updateele.date = obj.Date
@@ -135,7 +135,7 @@ export default function App() {
       }
       else{
         alert("ID_DOSEN'T_MATCH")
-        console.log(updateele.id.toString(2))
+        console.log(updateele.id.toString())
       }
     })
     if(obj.Type === "Recipt"){

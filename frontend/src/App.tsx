@@ -12,16 +12,15 @@ import { Route, Routes } from "react-router-dom";
 // import {createBrowserRouter} from "react-router-dom"
 
 export default function App() {
-   interface RTIS  {
-    // key : number,  
-    id : number,
-    type : string,
-    date:string,
-    subject:string,
-    mark:number,
-    amo:number,
-    en:string
-  }
+ interface RTIS{
+  Id:number,
+  Type:string,
+  Date:string,
+  Subject:string,
+  Marks : number,
+  Amount : number,
+  ExamName  :string
+ }
   // const [UpdateId, setUpdateId] = useState<number>(0)
   const [data, setData]= useState<RTIS[]>([])
   const [total, setTotal] = useState<number>(0)
@@ -43,17 +42,17 @@ export default function App() {
       if (error !== null) {
         console.log(error);
       } else {
-        let loadedData:any | RTIS[]
-        loadedData = [...responseData]
-        console.log(loadedData);
-        setData(loadedData);
+        console.log(responseData)
+        // alert(responseData)
+       setData(responseData)
+    
         let profit = 0;
         let loss = 0;
-        for (let i = 0; i < loadedData.length; i++) {
-          if (loadedData[i].type === "Recipt") {
-            profit = profit + loadedData[i].amo;
+        for (let i = 0; i < responseData.length; i++) {
+          if (responseData[i].Type === "Recipt") {
+            profit = profit + responseData[i].Amount;
           } else {
-            loss = loss + loadedData[i].amo;
+            loss = loss + responseData[i].Amount;
           }
         }
         setTotal(profit - loss)  
@@ -69,6 +68,7 @@ export default function App() {
       reqconfig,
       get
     );
+    
   }, [fetcher, error]);
 
   
@@ -77,15 +77,7 @@ export default function App() {
     // let newData = [...data,da]
     
     console.log(total)
-    setData((prevData)=>prevData.concat({
-      id : da.Id,
-      type  : da.Type,
-      date : da.Date,
-      subject : da.Subject,
-      mark : da.Marks,
-      amo : da.Amount,
-      en : da.ExamName
-    }))
+    setData((prevData)=>[...prevData,da])
     if(da.Type === "Recipt"){ 
       // let tot = total
       // let added = da.Amount
@@ -99,7 +91,7 @@ export default function App() {
     }  
   }
   const fastdelete: (id:number,amount:number,type:string)=>void= (id,amount,type)=>{
-    let narr = data.filter((obj : {id:number})=>obj.id !== id)
+    let narr = data.filter((obj : {Id:number})=>obj.Id !== id)
     setData(narr)
     console.log(data)
     if(type === "Recipt"){
@@ -113,29 +105,21 @@ export default function App() {
     console.log(bidobj)
   }
   const fastu : (id:number,obj:{Id : number,Type : string,Date:string,Subject:string,Marks:number,Amount:number,ExamName:string})=>void = (id,obj)=>{
-    type updatetype = {
-      id : number,
-      type : string,
-      date : string,
-      subject : string,
-      mark : number,
-      amo : number,
-      en : string
-    }
+
    
-    data.forEach((updateele : updatetype) =>{
-      if(updateele.id === id){
-        updateele.id = obj.Id
-        updateele.type  = obj.Type
-        updateele.date = obj.Date
-        updateele.subject = obj.Subject
-        updateele.mark = obj.Marks
-        updateele.amo = obj.Amount
-        updateele.en = obj.ExamName
+    data.forEach((updateele : RTIS) =>{
+      if(updateele.Id === id){
+        updateele.Id = obj.Id
+        updateele.Type  = obj.Type
+        updateele.Date = obj.Date
+        updateele.Subject = obj.Subject
+        updateele.Marks = obj.Marks
+        updateele.Amount = obj.Amount
+        updateele.ExamName = obj.ExamName
       }
       else{
         alert("ID_DOSEN'T_MATCH")
-        console.log(updateele.id.toString())
+        console.log(updateele.Id.toString())
       }
     })
     if(obj.Type === "Recipt"){
@@ -170,23 +154,23 @@ export default function App() {
         </thead>
         <tbody>
 
-      {data.map((obj:{id:number,date:string,type:string,subject:string,mark:number,amo:number,en:string})=>(
+      {data.map((obj:RTIS)=>(
         <>  
          <TestTrans 
-            key={obj.id}
-            date={obj.date}
-            type={obj.type}
-            subject={obj.subject}
-            marks={obj.mark}
-            amount={obj.amo}
-            examname={obj.en}
+            key={obj.Id}
+            date={obj.Date}
+            type={obj.Type}
+            subject={obj.Subject}
+            marks={obj.Marks}
+            amount={obj.Amount}
+            examname={obj.ExamName}
             component1 = {<Delete 
-              id={obj.id} 
-              amount={obj.amo}
-              type={obj.type}
+              id={obj.Id} 
+              amount={obj.Amount}
+              type={obj.Type}
               fastde= {fastdelete}
             />}
-            component2 = {<Update id={obj.id} />}
+            component2 = {<Update id={obj.Id} />}
             data={obj}
          />
          

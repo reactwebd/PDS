@@ -15,6 +15,10 @@ type datatype ={
   Amount : number,
   ExamName :  string
 }
+type bidtype ={
+  Id : number,
+  
+}
 
 let loadedData : datatype[] = [{
   Id:0,
@@ -35,8 +39,12 @@ app.get("/api/exams/",(req:Request,res:Response  )=>{
   //   if(error) throw error
   //   res.send(result)
   // })
+  
   res.send(loadedData)
   console.log(loadedData)
+})
+app.get("/api/bid",(req:Request,res:Response)=>{
+
 })
 app.post("/api/exams/",(req : Request,res:Response)=>{
 

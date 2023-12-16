@@ -1,7 +1,7 @@
 import React,{useRef} from "react";
 import "../Styles/Modal.css";
 import UseFetcher from "../../hooks/UseFetcher";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
   type FOT = {
     Id : number,
@@ -12,9 +12,6 @@ import { useNavigate, useParams } from "react-router-dom";
     Amount : number,
     ExamName : string
   }
-  interface Params{
-    uid?:string
-  }
  const Modal:React.FC<{fastu:(id : number,formobj:FOT)=>void}>=(props) =>{
   const typeref:string|any = useRef("")
   const dateref:string|any = useRef("")
@@ -24,18 +21,24 @@ import { useNavigate, useParams } from "react-router-dom";
   const exref:string|any = useRef("")
   // const [body, setBody] = useState<>(null)
   const {loader,error,RDH : updater}= UseFetcher()
+  const location = useLocation()
+  let path :string = location.pathname
+  let strarr : string[] = path.split("/:")
+  
+  // let aid : string | undefined = uid.id
   const navigate =  useNavigate()
-  const { uid } = useParams<Params>();
-  const nuid = uid ?? "";
+  // const nuid = uid ?? "";
   // const nuid : number = parseInt(uid,10)
   const secondHand = (e:any) => {
     e.preventDefault()
+    let uid : number  = parseFloat(strarr[1])
     let date = dateref.current.value
     let type = typeref.current.value
     let sub = subref.current.value
     let mar = marref.current.value
     let amount = amoref.current.value
     let exam = exref.current.value
+    console.log(uid,isNaN(uid))
     let formobj : FOT = {
         Id : Math.random(),
         Type : type,
@@ -49,13 +52,8 @@ import { useNavigate, useParams } from "react-router-dom";
         alert("Please fill the form")
     }
     else{
-
-        if(isNaN(nuid)){
-          console.log(`Can't get ${nuid}`)
-          return 
-        }
-        else{
-          props.fastu(nuid,formobj)
+        
+          props.fastu(uid,formobj)
         navigate("/")
           console.log(formobj)
           
@@ -76,7 +74,7 @@ import { useNavigate, useParams } from "react-router-dom";
     // props.onCancel()
     // console.log(respo)
     }
-  }
+  
   return (
     <div id="modal" className="modal">
       <div className="modal-content">
@@ -112,5 +110,6 @@ import { useNavigate, useParams } from "react-router-dom";
       </div>
   </div>
   );
+
 }
 export default Modal

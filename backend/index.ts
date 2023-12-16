@@ -1,6 +1,6 @@
 import cors from 'cors'
 import express,{Application, Request, Response} from 'express'
-import mysql_conn from './mysql_conn.ts'
+// import mysql_conn from './mysql_conn.ts'
 
 const app:Application= express()
 // console.log(typeof(app))
@@ -26,10 +26,10 @@ Amount:100,
 ExamName:"Weekly test"
 
 }]
-mysql_conn.getConnection(function (err : any) {
-  if (err) throw err;   
-  console.log("Connected!");
-});
+// mysql_conn.getConnection(function (err : any) {
+//   if (err) throw err;   
+//   console.log("Connected!");
+// });
 app.get("/api/exams/",(req:Request,res:Response  )=>{
   //  mysql_conn.query("SELECT * FROM `exam-entreis`",function(error,result,feilds){
   //   if(error) throw error
@@ -78,6 +78,18 @@ app.delete("/api/exams/:id", (req : Request,res:Response) => {
 
 app.put("/api/exams/:id", (req : Request, res : Response) => {
   let UpdateId : string = req.params.id
+  let nuid : number = parseFloat(UpdateId)
+  loadedData.forEach((puter:datatype)=>{
+    if(puter.Id == nuid){
+      puter.Id = req.body.Id
+      puter.Type = req.body.Type 
+      puter.Date = req.body.Data,
+      puter.Subject = req.body.Subject
+      puter.Marks = req.body.Marks
+      puter.Amount = req.body.Amount 
+      puter.ExamName = req.body.ExamName
+    }
+  })
   // mysql_conn.query("UPDATE `exam-entreis` SET `Type`='"+req.body.Type+"',`Date`='"+req.body.Date+"',`Subject`='"+req.body.Subject+"',`Marks`='"+req.body.Mark+"',`Amount`='"+req.body.Amount+"',`ExamName`='"+req.body.Exam+"' WHERE TRIM(Id)="+UpdateId.toString()+"",function(error,fields){
   //   if(error){
   //     res.status(500).json({message : "INTERNAL_SERVER_ERROR" + error})
@@ -86,16 +98,7 @@ app.put("/api/exams/:id", (req : Request, res : Response) => {
   //     res.status(200).json({message : "Data such as "+req.body.Subject+" etc were updated successfully under "+UpdateId})
   //   }
   // })
-  let filtered : datatype|undefined = loadedData.find((obj:datatype)=>obj.Id.toString(obj.Id)==UpdateId)
-  if(filtered){
-   filtered.Id = req.body.Id,
-   filtered.Type = req.body.Type,
-   filtered.Date = req.body.Date,
-   filtered.Subject = req.body.Subject
-   filtered.Marks = req.body.Marks,
-   filtered.Amount = req.body.Amount,
-   filtered.ExamName = req.body.ExamName,
-  }
+ 
 });
 
 app.listen(8000,()=>{

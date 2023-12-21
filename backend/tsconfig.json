@@ -1,0 +1,10 @@
+{
+    "compilerOptions": {
+      "target": "es6",
+      "module": "CommonJS",
+    //   "rootDir": "",
+      "strict": true,
+      "allowJs": false, // This allows TypeScript to compile JavaScript files
+      "esModuleInterop": true
+    }
+  }

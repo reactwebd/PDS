@@ -186,7 +186,56 @@ export default function App() {
       />
       <Route 
         path={`/exam_update/:uid`}
-        element={<Modal fastu={fastu}/>}
+        element={
+          <>
+          <Modal fastu={fastu} objs={data}/>
+        <TestForm 
+        fast={fastData}/>
+        {loader === true && <p>Loading data...</p>}
+        {error !== null && <p>{error}</p>}
+         <table>
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Date</th>
+            <th>Subject</th>
+            <th>Marks</th>
+            <th>Amount</th>
+            <th>Exam Name</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+
+      {data.map((obj:RTIS)=>(
+        <>  
+         <TestTrans 
+            key={obj.Id}
+            date={obj.Date}
+            type={obj.Type}
+            subject={obj.Subject}
+            marks={obj.Marks}
+            amount={obj.Amount}
+            examname={obj.ExamName}
+            component1 = {<Delete 
+              id={obj.Id} 
+              amount={obj.Amount}
+              type={obj.Type}
+              fastde= {fastdelete}
+            />}
+            component2 = {<Update id={obj.Id} />}
+            data={obj}
+         />
+         
+        </>
+      ))}
+        </tbody>
+        </table>
+        
+        <hr/>
+              <p  style={{marginLeft : "955px"}}>{`${total}`}</p>
+        </>
+      }
       />
       <Route
       path="/bid"

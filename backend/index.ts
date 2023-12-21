@@ -1,6 +1,6 @@
 import cors from 'cors'
 import express,{Application, Request, Response} from 'express'
-// import mysql_conn from './mysql_conn.ts'
+import mysql_conn from './mysql_conn.ts'
 
 const app:Application= express()
 // console.log(typeof(app))
@@ -30,10 +30,10 @@ Amount:100,
 ExamName:"Weekly test"
 
 }]
-// mysql_conn.getConnection(function (err : any) {
-//   if (err) throw err;   
-//   console.log("Connected!");
-// });
+mysql_conn.getConnection(function (err : any) {
+  if (err) throw err;   
+  console.log("Connected!");
+});
 app.get("/api/exams/",(req:Request,res:Response  )=>{
   //  mysql_conn.query("SELECT * FROM `exam-entreis`",function(error,result,feilds){
   //   if(error) throw error

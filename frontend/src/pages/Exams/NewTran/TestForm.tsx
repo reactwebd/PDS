@@ -30,8 +30,9 @@ export default function TestForm(props:any) {
         Amount : number,
         ExamName : string
       }
+      // let ex : number = Math.random().toFixed(Math.random()*10)
       let formobj:formtype = {
-          Id : Math.random(),
+          Id : Math.floor(Math.random() * (1000000 - 1 + 1) + 1),
           Type : type,
           Date : date,
           Subject : sub,

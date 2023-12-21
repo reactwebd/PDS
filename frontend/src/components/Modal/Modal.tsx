@@ -3,7 +3,7 @@ import "../Styles/Modal.css";
 import UseFetcher from "../../hooks/UseFetcher";
 import { useNavigate, useLocation } from "react-router-dom";
 
-  type FOT = {
+  interface FOT  {
     Id : number,
     Type : string,
     Date : string,
@@ -12,7 +12,7 @@ import { useNavigate, useLocation } from "react-router-dom";
     Amount : number,
     ExamName : string
   }
- const Modal:React.FC<{fastu:(id : number,formobj:FOT)=>void}>=(props) =>{
+ const Modal:React.FC<{fastu:(id : number,formobj:FOT)=>void,objs : FOT[]}>=(props) =>{
   const typeref:string|any = useRef("")
   const dateref:string|any = useRef("")
   const subref:string|any = useRef("")
@@ -24,14 +24,14 @@ import { useNavigate, useLocation } from "react-router-dom";
   const location = useLocation()
   let path :string = location.pathname
   let strarr : string[] = path.split("/:")
-  
   // let aid : string | undefined = uid.id
+  let uid : number  = parseFloat(strarr[1])
   const navigate =  useNavigate()
+  // let obj:FOT|undefined = props.objs.find((ent:FOT)=>ent.Id === uid)
   // const nuid = uid ?? "";
   // const nuid : number = parseInt(uid,10)
   const secondHand = (e:any) => {
     e.preventDefault()
-    let uid : number  = parseFloat(strarr[1])
     let date = dateref.current.value
     let type = typeref.current.value
     let sub = subref.current.value
@@ -40,7 +40,7 @@ import { useNavigate, useLocation } from "react-router-dom";
     let exam = exref.current.value
     console.log(uid,isNaN(uid))
     let formobj : FOT = {
-        Id : Math.random(),
+        Id : Math.floor(Math.random() * (1000000 - 1 + 1) + 1),
         Type : type,
         Date : date,
         Subject : sub,
@@ -84,7 +84,7 @@ import { useNavigate, useLocation } from "react-router-dom";
         <h2>Modal Form</h2>
         <form>
         <label htmlFor="">Date</label>
-        <input type="date" placeholder="Enter the name of test" required ref={dateref} />
+        <input type="date" placeholder="Enter the name of test" required ref={dateref} value={uid.Date} />
 
         <label htmlFor="">Entry type</label>
         <select id="colors" name="colors" required ref={typeref}>

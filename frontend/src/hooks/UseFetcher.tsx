@@ -21,7 +21,7 @@ const UseFetcher = () => {
     BAmount : number
   }
   type bodyType = examtype|bidtype|null
-  const RDH = useCallback(async(requestConfig:{url : string,met : string,body : bodyType,head: any|null},applydata:any)=>{
+  const RDH = useCallback(async(requestConfig:{url : string,met : string,body : bodyType,head: any|{}},applydata:any)=>{
     try{
       setLoader(true) 
       const response= await fetch(requestConfig.url,{

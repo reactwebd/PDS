@@ -5,5 +5,4 @@ let mysql_conn = mysql.createPool({
     password: "",       
     database: "pds"
 })
-
-module.exports = mysql_conn
+export default mysql_conn

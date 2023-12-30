@@ -24,12 +24,9 @@ import { useNavigate, useLocation } from "react-router-dom";
   const location = useLocation()
   let path :string = location.pathname
   let strarr : string[] = path.split("/:")
-  // let aid : string | undefined = uid.id
   let uid : number  = parseFloat(strarr[1])
   const navigate =  useNavigate()
-  // let obj:FOT|undefined = props.objs.find((ent:FOT)=>ent.Id === uid)
-  // const nuid = uid ?? "";
-  // const nuid : number = parseInt(uid,10)
+
   const secondHand = (e:any) => {
     e.preventDefault()
     let date = dateref.current.value
@@ -84,7 +81,7 @@ import { useNavigate, useLocation } from "react-router-dom";
         <h2>Modal Form</h2>
         <form>
         <label htmlFor="">Date</label>
-        <input type="date" placeholder="Enter the name of test" required ref={dateref} value={uid.Date} />
+        <input type="date" placeholder="Enter the name of test" required ref={dateref}  />
 
         <label htmlFor="">Entry type</label>
         <select id="colors" name="colors" required ref={typeref}>

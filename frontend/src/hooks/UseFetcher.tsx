@@ -1,8 +1,8 @@
-import {  useCallback, useState } from "react";
+import React,{ useState } from "react";
 
 const UseFetcher = () => {
-  const [loader, setLoader] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<null>(null);
+  const [loader, setLoader] = useState<boolean>(false);
   // const [responseData, setResponseData] = useState([])
 
   type examtype = {
@@ -21,7 +21,7 @@ const UseFetcher = () => {
     BAmount : number
   }
   type bodyType = examtype|bidtype|null
-  const RDH = useCallback(async(requestConfig:{url : string,met : string,body : bodyType,head: any|{}},applydata:any)=>{
+  const RDH = async(requestConfig:{url : string,met : string,body : bodyType,head: any|{}},applydata:any)=>{
     try{
       setLoader(true) 
       const response= await fetch(requestConfig.url,{
@@ -40,7 +40,7 @@ const UseFetcher = () => {
       setLoader(false)
     }
     setLoader(false)
-  },[])
+  }
       
       // .catch((err) => setError(err))
     return {loader,error,RDH};

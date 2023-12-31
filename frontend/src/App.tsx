@@ -69,11 +69,11 @@ export default function App() {
       get
     );
     
-  }, [fetcher, error]);
+  }, []);
 
   
   
-  const fastData = (da:responseType)=>{
+  const fastData:(da:responseType)=>void = (da:responseType)=>{
     // let newData = [...data,da]
     
     console.log(total)
@@ -171,7 +171,6 @@ export default function App() {
               fastde= {fastdelete}
             />}
             component2 = {<Update id={obj.Id} />}
-            data={obj}
          />
          
         </>
@@ -211,8 +210,8 @@ export default function App() {
         <>  
          <TestTrans 
             key={obj.Id}
-            date={obj.Date}
             type={obj.Type}
+            date={obj.Date}
             subject={obj.Subject}
             marks={obj.Marks}
             amount={obj.Amount}
@@ -224,7 +223,6 @@ export default function App() {
               fastde= {fastdelete}
             />}
             component2 = {<Update id={obj.Id} />}
-            data={obj}
          />
          
         </>

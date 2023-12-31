@@ -2,7 +2,16 @@ import React, { useRef } from "react";
 import "../../../components/Styles/TestForm.css";
 import UseFetcher from "../../../hooks/UseFetcher";
 
-export default function TestForm(props:any) {
+interface formtype {
+  Id : number,
+  Type : string,
+  Date : string,
+  Subject : string,
+  Marks : number,
+  Amount : number,
+  ExamName : string
+}
+const TestForm:React.FC<{fast:(formobj:formtype)=>void}>=(props)=> {
   const typeref:any = useRef("")
     const dateref:any = useRef("")
     const subref:any = useRef("")
@@ -21,15 +30,6 @@ export default function TestForm(props:any) {
       let amount:number = amoref.current.value
       let exam:string = exref.current.value
       
-      interface formtype {
-        Id : number,
-        Type : string,
-        Date : string,
-        Subject : string,
-        Marks : number,
-        Amount : number,
-        ExamName : string
-      }
       // let ex : number = Math.random().toFixed(Math.random()*10)
       let formobj:formtype = {
           Id : Math.floor(Math.random() * (1000000 - 1 + 1) + 1),
@@ -98,3 +98,4 @@ export default function TestForm(props:any) {
     </div>
   );
 }
+export default TestForm

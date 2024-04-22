@@ -46,8 +46,8 @@ export default function App() {
         // alert(responseData)
        setData(responseData)
     
-        let profit = 0;
-        let loss = 0;
+        let profit:number = 0;
+        let loss:number = 0;
         for (let i = 0; i < responseData.length; i++) {
           if (responseData[i].Type === "Recipt") {
             profit = profit + responseData[i].Amount;
@@ -105,6 +105,7 @@ export default function App() {
     console.log(bidobj)
   }
   const fastu : (id:number,obj:{Id : number,Type : string,Date:string,Subject:string,Marks:number,Amount:number,ExamName:string})=>void = (id,obj)=>{
+      
     data.forEach((updateele : RTIS) =>{
       if(updateele.Id === id){
         updateele.Id = obj.Id
@@ -120,12 +121,22 @@ export default function App() {
         console.log(updateele.Id.toString())
       }
     })
-    if(obj.Type === "Recipt"){
-      setTotal((prevTotal)=>prevTotal+parseInt(obj.Amount.toString(obj.Amount)))
-    }
-    else{
-      setTotal((prevTotal)=>prevTotal-obj.Amount)
-    }
+      let profit:number = 0;
+      let loss:number = 0;
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].Type === "Recipt") {
+          profit = profit + parseInt(data[i].Amount.toString());
+        } else {
+          loss = loss + data[i].Amount;
+        }
+      }
+      setTotal(profit - loss)  
+    //   setTotal((prevTotal)=>prevTotal-prevele.Amount)
+    //   setTotal((prevTotal)=>prevTotal+parseInt(obj.Amount.toString(obj.Amount)))
+    // }
+    // else{
+    //   setTotal((prevTotal)=>prevTotal-obj.Amount)
+    // }
   }
   return (
     <Layout>

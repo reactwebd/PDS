@@ -50,7 +50,7 @@ import { useNavigate, useLocation } from "react-router-dom";
     }
     else{
         
-          props.fastu(uid,formobj)
+      props.fastu(uid,formobj)
         navigate("/")
           console.log(formobj)
           

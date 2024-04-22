@@ -105,8 +105,6 @@ export default function App() {
     console.log(bidobj)
   }
   const fastu : (id:number,obj:{Id : number,Type : string,Date:string,Subject:string,Marks:number,Amount:number,ExamName:string})=>void = (id,obj)=>{
-
-   
     data.forEach((updateele : RTIS) =>{
       if(updateele.Id === id){
         updateele.Id = obj.Id
